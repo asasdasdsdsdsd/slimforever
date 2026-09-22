@@ -44,25 +44,29 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col pb-12">
 
     <!-- Header -->
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-emerald-200">
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-emerald-200 shrink-0">
                     <i class="fa-solid fa-utensils"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-slate-800 text-lg sm:text-xl leading-tight">SlimForever <span class="text-emerald-600">AI</span></h1>
-                    <p class="text-xs text-slate-500">ลดน้ำหนักตลอดไป: วิเคราะห์อาหาร & แชร์กลุ่มเพื่อน</p>
+                    <h1 class="font-bold text-slate-800 text-base sm:text-xl leading-tight">SlimForever <span class="text-emerald-600">AI</span></h1>
+                    <p class="text-[11px] sm:text-xs text-slate-500">สแกนอาหาร แคลอรี่ & แชร์กลุ่มเพื่อน</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                <button onclick="openApiKeyModal()" class="flex items-center gap-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-3 py-1.5 rounded-full font-semibold border border-amber-300 transition" title="ตั้งค่า Gemini API Key">
+            
+            <!-- Quick Action Header Buttons -->
+            <div class="flex items-center gap-1.5 sm:gap-2">
+                <button onclick="openApiKeyModal()" class="flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl font-semibold border border-amber-300 shadow-sm transition" title="ตั้งค่า Gemini API Key">
                     <i class="fa-solid fa-key text-amber-600"></i>
-                    <span id="header-apikey-status">ใส่ API Key (ฟรี)</span>
+                    <span id="header-apikey-status" class="hidden xs:inline sm:inline">ใส่ API Key (ฟรี)</span>
+                    <span class="xs:hidden sm:hidden text-[11px]">API Key</span>
                 </button>
-                <button onclick="openGroupModal()" class="flex items-center gap-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs px-3 py-1.5 rounded-full font-semibold border border-emerald-300 transition">
+                <button onclick="openGroupModal()" class="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl font-semibold border border-emerald-300 shadow-sm transition">
                     <i class="fa-solid fa-users text-emerald-600"></i>
-                    <span id="header-group-status">แชร์กลุ่มกับเพื่อน</span>
+                    <span id="header-group-status" class="hidden xs:inline sm:inline">แก๊งเพื่อน</span>
+                    <span class="xs:hidden sm:hidden text-[11px]">กลุ่ม</span>
                 </button>
             </div>
         </div>
@@ -73,19 +77,19 @@
         
         <!-- Navigation Tabs -->
         <div class="flex bg-slate-200/80 p-1 rounded-2xl mb-6 font-medium text-xs sm:text-sm gap-1">
-            <button id="tab-btn-scan" onclick="switchTab('scan')" class="flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-sm font-semibold">
+            <button id="tab-btn-scan" onclick="switchTab('scan')" class="flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-sm font-semibold">
                 <i class="fa-solid fa-camera"></i>
                 <span>ถ่ายรูป/สแกน</span>
             </button>
-            <button id="tab-btn-calc" onclick="switchTab('calc')" class="flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
+            <button id="tab-btn-calc" onclick="switchTab('calc')" class="flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
                 <i class="fa-solid fa-calculator"></i>
                 <span>เป้าหมาย (TDEE)</span>
             </button>
-            <button id="tab-btn-log" onclick="switchTab('log')" class="flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
+            <button id="tab-btn-log" onclick="switchTab('log')" class="flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
                 <i class="fa-solid fa-list-check"></i>
                 <span>บันทึกอาหาร</span>
             </button>
-            <button id="tab-btn-friends" onclick="switchTab('friends')" class="flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
+            <button id="tab-btn-friends" onclick="switchTab('friends')" class="flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
                 <i class="fa-solid fa-users-viewfinder"></i>
                 <span>แก๊งกินกับเพื่อน</span>
             </button>
@@ -436,12 +440,12 @@
 
     <!-- Group Sync Modal -->
     <div id="group-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
+        <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
                     <i class="fa-solid fa-users-gear text-emerald-500"></i> เข้าร่วม / สร้างกลุ่มคลาวด์
                 </h3>
-                <button onclick="closeGroupModal()" class="text-slate-400 hover:text-slate-700">
+                <button onclick="closeGroupModal()" class="text-slate-400 hover:text-slate-700 p-1">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
@@ -468,12 +472,12 @@
 
     <!-- API Key Modal -->
     <div id="apikey-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
+        <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
                     <i class="fa-solid fa-key text-amber-500"></i> ตั้งค่า Gemini API Key (ฟรี 100%)
                 </h3>
-                <button onclick="closeApiKeyModal()" class="text-slate-400 hover:text-slate-700">
+                <button onclick="closeApiKeyModal()" class="text-slate-400 hover:text-slate-700 p-1">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
@@ -638,10 +642,10 @@
                 const btnEl = document.getElementById(`tab-btn-${tab}`);
                 if (tab === tabName) {
                     tabEl.classList.remove('hidden');
-                    btnEl.className = "flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-sm font-semibold";
+                    btnEl.className = "flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-sm font-semibold";
                 } else {
                     tabEl.classList.add('hidden');
-                    btnEl.className = "flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium";
+                    btnEl.className = "flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium";
                 }
             });
         }
@@ -685,15 +689,16 @@
             const savedApiKey = localStorage.getItem('gemini_user_api_key') || '';
 
             if (!savedApiKey) {
-                // Smart Estimation Mode without API Key
+                // หากยังไม่ได้ใส่ API Key ให้แจ้งเตือนและเปิดป๊อปอัพให้ใส่ Key ทันที
                 setTimeout(() => {
                     const fallbackResult = generateSmartFallbackAnalysis();
                     lastAnalyzedFood = fallbackResult;
                     displayAnalysisResult(fallbackResult, false);
                     loadingEl.classList.add('hidden');
                     analyzeBtn.disabled = false;
-                    showToast("วิเคราะห์ด้วยระบบประเมินอัจฉริยะ! (ใส่ Gemini API Key ฟรีเพื่อเปิดใช้ AI เต็มรูปแบบ)", "info");
-                }, 1200);
+                    showToast("กรุณาใส่ Gemini API Key เพื่อวิเคราะห์รูปอาหารจริงของคุณ", "info");
+                    openApiKeyModal();
+                }, 600);
                 return;
             }
 
@@ -704,20 +709,21 @@
                     currentSelectedImageBase64.indexOf(";")
                 );
 
-                const prompt = `วิเคราะห์ภาพนี้ ไม่ว่าจะเป็นอาหาร จานข้าว ก๋วยเตี๋ยว ชานมไข่มุก กาแฟ หรือน้ำหวานชนิดต่างๆ แล้วส่งคืน JSON ภาษาไทยตามโครงสร้างนี้เท่านั้น:
+                const prompt = `คุณคือระบบ AI นักโภชนาการ วิเคราะห์ภาพถ่ายนี้อย่างแม่นยำที่สุด:
+1. ตรวจสอบอย่างถี่ถ้วนว่าเป็น "อาหารจานหลัก/กับข้าว/ของทานเล่น" หรือ "เครื่องดื่ม/น้ำหวาน/ชา/กาแฟ" (ห้ามระบุสับสนระหว่างอาหารจานกับแก้วน้ำเด็ดขาด)
+2. ระบุชื่อเมนูที่เห็นในรูปตามความเป็นจริง และประมาณค่าแคลอรี่ โปรตีน คาร์โบไฮเดรต ไขมัน และใยอาหาร
+3. ตอบกลับเป็น JSON ภาษาไทยตามโครงสร้างนี้เท่านั้น:
 {
-  "foodName": "ชื่อเมนูภาษาไทย (เช่น ชานมไข่มุก / ข้าวผัดกุ้ง)",
-  "portion": "ปริมาณประมาณการณ์ (เช่น 1 แก้ว 22oz / 1 จาน)",
-  "calories": 350,
-  "proteinGrams": 5,
-  "carbsGrams": 55,
+  "foodName": "ชื่อเมนูภาษาไทยตรงตามรูปภาพ (เช่น ข้าวผัดกุ้ง / ชานมไข่มุก / ก๋วยเตี๋ยว)",
+  "portion": "ปริมาณประมาณการณ์ (เช่น 1 จาน / 1 ชาม / 1 แก้ว)",
+  "calories": 400,
+  "proteinGrams": 20,
+  "carbsGrams": 50,
   "fatGrams": 12,
-  "fiberGrams": 1,
-  "healthSummary": "คำแนะนำสั้นๆ สำหรับคนควบคุมน้ำหนัก"
+  "fiberGrams": 2,
+  "healthSummary": "คำแนะนำโภชนาการที่เหมาะสมสำหรับเมนูนี้"
 }`;
 
-                const systemPrompt = "คุณเป็นนักโภชนาการ AI วิเคราะห์ภาพอาหารและเครื่องดื่มน้ำหวาน ตอบเฉพาะ JSON เท่านั้น";
-                
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${savedApiKey}`;
 
                 const payload = {
@@ -751,14 +757,14 @@
 
                 lastAnalyzedFood = parsedResult;
                 displayAnalysisResult(parsedResult, true);
-                showToast("วิเคราะห์ด้วย Gemini AI สำเร็จ!", "success");
+                showToast("วิเคราะห์ภาพถ่ายด้วย Gemini AI สำเร็จ!", "success");
 
             } catch (error) {
                 console.error('Error analyzing image:', error);
                 const fallbackResult = generateSmartFallbackAnalysis();
                 lastAnalyzedFood = fallbackResult;
                 displayAnalysisResult(fallbackResult, false);
-                showToast("ใช้ระบบสแกนสำรอง (โปรดตรวจสอบ Gemini API Key ในเมนูด้านบน)", "info");
+                showToast("เกิดข้อผิดพลาดในการเชื่อมต่อ (โปรดตรวจสอบ Gemini API Key)", "error");
             } finally {
                 loadingEl.classList.add('hidden');
                 analyzeBtn.disabled = false;
@@ -766,12 +772,16 @@
         }
 
         function generateSmartFallbackAnalysis() {
-            const samples = [
-                { foodName: "ชานมไข่มุก / เครื่องดื่มหวาน", portion: "1 แก้ว (16-22 oz)", calories: 360, proteinGrams: 3, carbsGrams: 58, fatGrams: 14, fiberGrams: 1, healthSummary: "มีน้ำตาลและคาร์บสูง ควรสั่งความหวานลดเหลือ 25-50% เพื่อช่วยให้ลดน้ำหนักได้ง่ายขึ้น" },
-                { foodName: "ข้าวราดแกง / ข้าวผัดกุ้ง", portion: "1 จาน (300 กรัม)", calories: 480, proteinGrams: 22, carbsGrams: 55, fatGrams: 18, fiberGrams: 2, healthSummary: "มีคาร์โบไฮเดรตและโปรตีนสมดุล เลี่ยงการราดน้ำมันพริกเผาปริมาณมากเพื่อคุมแคลอรี่" },
-                { foodName: "กาแฟเย็น / ลาเต้เย็น", portion: "1 แก้ว", calories: 250, proteinGrams: 5, carbsGrams: 32, fatGrams: 10, fiberGrams: 0, healthSummary: "มีพลังงานจากนมสดและน้ำเชื่อม ควรเลือกนมพิสตาชิโอหรือนมถั่วเหลืองแบบไม่หวาน" }
-            ];
-            return samples[Math.floor(Math.random() * samples.length)];
+            return {
+                foodName: "โหมดตัวอย่าง (ยังไม่ได้ใส่ API Key)",
+                portion: "1 จาน / 1 แก้ว",
+                calories: 0,
+                proteinGrams: 0,
+                carbsGrams: 0,
+                fatGrams: 0,
+                fiberGrams: 0,
+                healthSummary: "⚠️ เพื่อให้ AI สแกนวิเคราะห์รูปภาพอาหารและน้ำหวานของคุณได้อย่างแม่นยำ กรุณากดปุ่ม 'ใส่ API Key (ฟรี)' ที่มุมขวาบน หรือกดลิงก์ในป๊อปอัพเพื่อรับ API Key ฟรีจาก Google สตรีมมิ่งได้เลยครับ!"
+            };
         }
 
         function displayAnalysisResult(parsedResult, isLiveAi = true) {
@@ -814,10 +824,10 @@
             const statusEl = document.getElementById('header-apikey-status');
             if (key) {
                 statusEl.innerText = "API Key: เชื่อมต่อแล้ว";
-                statusEl.parentElement.className = "flex items-center gap-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs px-3 py-1.5 rounded-full font-semibold border border-emerald-300 transition";
+                statusEl.parentElement.className = "flex items-center gap-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl font-semibold border border-emerald-300 transition";
             } else {
                 statusEl.innerText = "ใส่ API Key (ฟรี)";
-                statusEl.parentElement.className = "flex items-center gap-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-3 py-1.5 rounded-full font-semibold border border-amber-300 transition";
+                statusEl.parentElement.className = "flex items-center gap-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl font-semibold border border-amber-300 transition";
             }
         }
 
@@ -1013,7 +1023,7 @@
                 statusEl.innerText = `กลุ่ม: ${window.userProfile.groupCode}`;
                 activeGroupEl.innerText = `กลุ่ม: ${window.userProfile.groupCode} (${window.userProfile.userName})`;
             } else {
-                statusEl.innerText = `แชร์กลุ่มกับเพื่อน`;
+                statusEl.innerText = `แก๊งเพื่อน`;
                 activeGroupEl.innerText = `ยังไม่ได้เข้าร่วมกลุ่ม`;
             }
         }
