@@ -44,29 +44,21 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col pb-12">
 
     <!-- Header -->
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-emerald-200 shrink-0">
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-emerald-200">
                     <i class="fa-solid fa-utensils"></i>
                 </div>
                 <div>
-                    <h1 class="font-bold text-slate-800 text-base sm:text-xl leading-tight">SlimForever <span class="text-emerald-600">AI</span></h1>
-                    <p class="text-[11px] sm:text-xs text-slate-500">สแกนอาหาร แคลอรี่ & แชร์กลุ่มเพื่อน</p>
+                    <h1 class="font-bold text-slate-800 text-lg sm:text-xl leading-tight">SlimForever <span class="text-emerald-600">AI</span></h1>
+                    <p class="text-xs text-slate-500">ลดน้ำหนักตลอดไป: วิเคราะห์อาหาร & แชร์กลุ่มเพื่อน</p>
                 </div>
             </div>
-            
-            <!-- Quick Action Header Buttons -->
-            <div class="flex items-center gap-1.5 sm:gap-2">
-                <button onclick="openApiKeyModal()" class="flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl font-semibold border border-amber-300 shadow-sm transition" title="ตั้งค่า Gemini API Key">
-                    <i class="fa-solid fa-key text-amber-600"></i>
-                    <span id="header-apikey-status" class="hidden xs:inline sm:inline">ใส่ API Key (ฟรี)</span>
-                    <span class="xs:hidden sm:hidden text-[11px]">API Key</span>
-                </button>
-                <button onclick="openGroupModal()" class="flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl font-semibold border border-emerald-300 shadow-sm transition">
+            <div class="flex items-center gap-2">
+                <button onclick="openGroupModal()" class="flex items-center gap-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs px-3 py-1.5 rounded-full font-semibold border border-emerald-300 transition">
                     <i class="fa-solid fa-users text-emerald-600"></i>
-                    <span id="header-group-status" class="hidden xs:inline sm:inline">แก๊งเพื่อน</span>
-                    <span class="xs:hidden sm:hidden text-[11px]">กลุ่ม</span>
+                    <span id="header-group-status">แชร์กลุ่มกับเพื่อน</span>
                 </button>
             </div>
         </div>
@@ -77,19 +69,19 @@
         
         <!-- Navigation Tabs -->
         <div class="flex bg-slate-200/80 p-1 rounded-2xl mb-6 font-medium text-xs sm:text-sm gap-1">
-            <button id="tab-btn-scan" onclick="switchTab('scan')" class="flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-sm font-semibold">
+            <button id="tab-btn-scan" onclick="switchTab('scan')" class="flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-sm font-semibold">
                 <i class="fa-solid fa-camera"></i>
                 <span>ถ่ายรูป/สแกน</span>
             </button>
-            <button id="tab-btn-calc" onclick="switchTab('calc')" class="flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
+            <button id="tab-btn-calc" onclick="switchTab('calc')" class="flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
                 <i class="fa-solid fa-calculator"></i>
                 <span>เป้าหมาย (TDEE)</span>
             </button>
-            <button id="tab-btn-log" onclick="switchTab('log')" class="flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
+            <button id="tab-btn-log" onclick="switchTab('log')" class="flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
                 <i class="fa-solid fa-list-check"></i>
                 <span>บันทึกอาหาร</span>
             </button>
-            <button id="tab-btn-friends" onclick="switchTab('friends')" class="flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
+            <button id="tab-btn-friends" onclick="switchTab('friends')" class="flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium">
                 <i class="fa-solid fa-users-viewfinder"></i>
                 <span>แก๊งกินกับเพื่อน</span>
             </button>
@@ -101,17 +93,9 @@
             <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200">
                 <h2 class="text-lg font-bold text-slate-800 mb-1 flex items-center gap-2">
                     <i class="fa-solid fa-wand-magic-sparkles text-emerald-500"></i>
-                    ถ่ายรูปวิเคราะห์แคลอรี่ & สารอาหาร (อาหาร / น้ำหวาน / เครื่องดื่ม)
+                    ถ่ายรูปวิเคราะห์แคลอรี่ & สารอาหาร
                 </h2>
-                <p class="text-slate-500 text-sm mb-4">อัปโหลดรูปภาพจานอาหาร ข้าว ชานม กาแฟ หรือน้ำหวาน AI จะช่วยประเมินแคลอรี่ คาร์บ โปรตีน และไขมันให้อัตโนมัติ</p>
-
-                <!-- Optional User Hint/Context for Better Accuracy -->
-                <div class="mb-4">
-                    <label for="user-food-note" class="block text-xs font-semibold text-slate-600 mb-1">
-                        <i class="fa-solid fa-pen-to-square text-emerald-500 mr-1"></i>ระบุรายละเอียดเพิ่มเติม (ช่วยให้ AI คำนวณแม่นยำขึ้นมาก):
-                    </label>
-                    <input type="text" id="user-food-note" placeholder="เช่น ทานครึ่งจาน, น้ำเปล่า, หวานน้อย 25%, ไม่ใส่น้ำมัน" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-slate-800">
-                </div>
+                <p class="text-slate-500 text-sm mb-4">อัปโหลดรูปภาพจานอาหาร AI จะช่วยวิเคราะห์ปริมาณ แป้ง โปรตีน และไขมันให้โดยอัตโนมัติ</p>
 
                 <!-- Dropzone / Camera -->
                 <div id="image-dropzone" class="border-2 border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50 hover:bg-emerald-50/30 rounded-2xl p-6 text-center transition cursor-pointer relative overflow-hidden group">
@@ -119,14 +103,14 @@
                     
                     <div id="upload-placeholder" class="space-y-3 py-4">
                         <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition duration-300">
-                            <i class="fa-solid fa-camera text-2xl"></i>
+                            <i class="fa-solid fa-cloud-arrow-up text-2xl"></i>
                         </div>
                         <div>
-                            <p class="font-medium text-slate-700">คลิกเพื่อถ่ายรูป/เลือกรูปภาพ หรือ ลากไฟล์มาวางที่นี่</p>
-                            <p class="text-xs text-slate-400 mt-1">รองรับอาหารทุกประเภท ข้าว ก๋วยเตี๋ยว ชานมไข่มุก กาแฟ น้ำอัดลม</p>
+                            <p class="font-medium text-slate-700">คลิกเพื่อเลือกรูปภาพ หรือ ลากไฟล์มาวางที่นี่</p>
+                            <p class="text-xs text-slate-400 mt-1">รองรับรูปภาพจานอาหาร เดี่ยวหรือหลายเมนู (JPG, PNG)</p>
                         </div>
                         <button type="button" onclick="document.getElementById('food-image-input').click()" class="px-4 py-2 bg-white text-emerald-600 font-medium text-sm rounded-xl border border-emerald-200 shadow-sm hover:bg-emerald-50 transition">
-                            <i class="fa-solid fa-image mr-1.5"></i> เลือกรูปภาพ หรือ ถ่ายรูป
+                            <i class="fa-solid fa-camera mr-1.5"></i> เลือกรูป หรือ ถ่ายภาพ
                         </button>
                     </div>
 
@@ -150,16 +134,16 @@
             <div id="scan-loading" class="hidden bg-white rounded-3xl p-8 text-center shadow-sm border border-slate-200 space-y-4">
                 <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-emerald-500 border-t-transparent"></div>
                 <h3 class="font-bold text-slate-800 text-lg">กำลังประมวลผลด้วย AI...</h3>
-                <p class="text-slate-500 text-sm max-w-md mx-auto">กำลังสแกนภาชนะ สัดส่วนวัตถุดิบ ความลึกของอาหาร และวิเคราะห์ปริมาณแคลอรี่ คาร์บ โปรตีน ไขมันอย่างแม่นยำ</p>
+                <p class="text-slate-500 text-sm max-w-md mx-auto">กำลังสแกนส่วนประกอบอาหาร ประเมินน้ำหนักจาน และคำนวณปริมาณแคลอรี่ โปรตีน คาร์โบไฮเดรต และไขมัน</p>
             </div>
 
             <!-- Analysis Result Dashboard -->
             <div id="scan-result" class="hidden bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-100 pb-4 gap-2">
                     <div>
-                        <span id="result-badge" class="inline-block px-2.5 py-1 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-md mb-1">ผลการวิเคราะห์ AI</span>
+                        <span class="inline-block px-2.5 py-1 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-md mb-1">ผลการวิเคราะห์ AI</span>
                         <h3 id="result-food-name" class="text-2xl font-bold text-slate-800">ชื่อเมนูอาหาร</h3>
-                        <p id="result-portion" class="text-slate-500 text-sm">ปริมาณประมาณ: 1 แก้ว/1 จาน</p>
+                        <p id="result-portion" class="text-slate-500 text-sm">ปริมาณประมาณ: 1 จาน</p>
                     </div>
                     <div class="bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-3 text-center sm:text-right">
                         <div class="text-xs text-emerald-600 font-semibold uppercase">พลังงานทั้งหมด</div>
@@ -176,7 +160,7 @@
                     </div>
                     <div class="bg-amber-50/60 border border-amber-100 p-3.5 rounded-2xl text-center">
                         <i class="fa-solid fa-wheat-awn text-amber-500 text-xl mb-1"></i>
-                        <div class="text-xs text-amber-600 font-semibold">คาร์บ/แป้ง/น้ำตาล</div>
+                        <div class="text-xs text-amber-600 font-semibold">แป้ง/คาร์บ (Carbs)</div>
                         <div class="text-xl font-bold text-slate-800 mt-1"><span id="result-carbs">0</span> g</div>
                     </div>
                     <div class="bg-rose-50/60 border border-rose-100 p-3.5 rounded-2xl text-center">
@@ -194,7 +178,7 @@
                 <!-- Health Summary & Advice -->
                 <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80">
                     <h4 class="font-bold text-slate-800 text-sm mb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-heart-pulse text-rose-500"></i> คำแนะนำทางโภชนาการ & เหตุผลการประเมิน
+                        <i class="fa-solid fa-heart-pulse text-rose-500"></i> คำแนะนำทางโภชนาการ
                     </h4>
                     <p id="result-health-summary" class="text-slate-600 text-sm leading-relaxed">สรุปจาก AI จะแสดงที่นี่</p>
                 </div>
@@ -202,7 +186,7 @@
                 <!-- Action Button to Log -->
                 <button onclick="logCurrentScannedFood()" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md transition flex items-center justify-center gap-2">
                     <i class="fa-solid fa-plus-circle"></i>
-                    <span>บันทึกรายการนี้ลงในไดอารี่ประจำวัน</span>
+                    <span>บันทึกเมนูนี้ลงในบันทึกประจำวัน</span>
                 </button>
             </div>
         </section>
@@ -214,7 +198,7 @@
                     <i class="fa-solid fa-calculator text-emerald-500"></i>
                     คำนวณอัตราเผาผลาญพลังงานเฉพาะบุคคล (BMR / TDEE)
                 </h2>
-                <p class="text-slate-500 text-sm mb-6">กรอกข้อมูลส่วนตัวเพื่อหาปริมาณแคลอรี่ที่เหมาะสมกับส่วนสูง น้ำหนัก และเป้าหมายการลดน้ำหนักของคุณ</p>
+                <p class="text-slate-500 text-sm mb-6">กรอกข้อมูลร่างกายของคุณ เพื่อคำนวณปริมาณแคลอรี่และสารอาหารที่ควรบริโภคต่อวันตามเป้าหมาย</p>
 
                 <form id="calculator-form" onsubmit="calculateEnergyNeeds(event)" class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -260,13 +244,13 @@
 
                     <!-- Activity Level -->
                     <div>
-                        <label for="calc-activity" class="block text-xs font-semibold text-slate-600 mb-1">ระดับกิจกรรมประจำวัน</label>
+                        <label for="calc-activity" class="block text-xs font-semibold text-slate-600 mb-1">ระดับการออกกำลังกาย / กิจกรรมประจำวัน</label>
                         <select id="calc-activity" class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-slate-800 font-medium text-sm">
-                            <option value="1.2">นั่งทำงานเป็นหลัก / ไม่ออกกำลังกาย</option>
+                            <option value="1.2">นั่งทำงานเป็นหลัก / ออกกำลังกายน้อยมากหรือไม่ออกเลย</option>
                             <option value="1.375" selected>ออกกำลังกายเบาๆ (1-3 วัน/สัปดาห์)</option>
                             <option value="1.55">ออกกำลังกายปานกลาง (3-5 วัน/สัปดาห์)</option>
                             <option value="1.725">ออกกำลังกายหนัก (6-7 วัน/สัปดาห์)</option>
-                            <option value="1.9">ออกกำลังกายหนักมาก / นักกีฬา</option>
+                            <option value="1.9">ออกกำลังกายหนักมาก / เป็นนักกีฬาฝึกซ้อม</option>
                         </select>
                     </div>
 
@@ -274,8 +258,8 @@
                     <div>
                         <label for="calc-goal" class="block text-xs font-semibold text-slate-600 mb-1">เป้าหมายของคุณ</label>
                         <select id="calc-goal" class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-slate-800 font-medium text-sm">
-                            <option value="lose-fast">ลดน้ำหนักเข้มข้น (-20% จาก TDEE)</option>
-                            <option value="lose-mild" selected>ลดน้ำหนักแบบยั่งยืน (-12%)</option>
+                            <option value="lose-fast">ลดน้ำหนักเข้มข้น (-20% จากพลังงานปกติ)</option>
+                            <option value="lose-mild" selected>ลดน้ำหนักแบบยั่งยืน (-10% ถึง -15%)</option>
                             <option value="maintain">รักษาน้ำหนักคงที่ (Maintain)</option>
                             <option value="gain">เพิ่มมวลกล้ามเนื้อ (+15%)</option>
                         </select>
@@ -283,7 +267,7 @@
 
                     <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-chart-pie"></i>
-                        <span>คำนวณเป้าหมายพลังงาน</span>
+                        <span>คำนวณพลังงานที่เหมาะสม</span>
                     </button>
                 </form>
             </div>
@@ -291,7 +275,7 @@
             <!-- Calculator Results Card -->
             <div id="calc-results-card" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-6">
                 <h3 class="font-bold text-slate-800 text-lg border-b border-slate-100 pb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-bullseye text-emerald-500"></i> สรุปเป้าหมายพลังงานประจำวันของคุณ
+                    <i class="fa-solid fa-bullseye text-emerald-500"></i> สรุปโภชนาการสำหรับเป้าหมายของคุณ
                 </h3>
 
                 <!-- Energy Target Overview -->
@@ -299,13 +283,15 @@
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 text-center">
                         <div class="text-xs text-slate-500 font-medium">BMR (เผาผลาญขั้นต่ำ)</div>
                         <div class="text-2xl font-bold text-slate-700 mt-1"><span id="res-bmr">0</span> <span class="text-xs text-slate-400 font-normal">kcal</span></div>
+                        <p class="text-[11px] text-slate-400 mt-1">พลังงานขณะพักผ่อน</p>
                     </div>
                     <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 text-center">
-                        <div class="text-xs text-slate-500 font-medium">TDEE (เผาผลาญรวม)</div>
+                        <div class="text-xs text-slate-500 font-medium">TDEE (ใช้พลังงานรวม)</div>
                         <div class="text-2xl font-bold text-slate-700 mt-1"><span id="res-tdee">0</span> <span class="text-xs text-slate-400 font-normal">kcal</span></div>
+                        <p class="text-[11px] text-slate-400 mt-1">รวมกิจกรรมประจำวัน</p>
                     </div>
                     <div class="bg-emerald-500 p-4 rounded-2xl text-white text-center shadow-lg shadow-emerald-500/20">
-                        <div class="text-xs text-emerald-100 font-medium">เป้าหมายแคลอรี่ต่อวัน</div>
+                        <div class="text-xs text-emerald-100 font-medium">เป้าหมายพลังงานต่อวัน</div>
                         <div class="text-3xl font-black mt-1"><span id="res-target-cal">0</span> <span class="text-xs font-normal">kcal/วัน</span></div>
                         <p id="res-goal-tag" class="text-[11px] text-emerald-100 mt-1">แนะนำสำหรับการลดน้ำหนัก</p>
                     </div>
@@ -313,22 +299,22 @@
 
                 <!-- Macro Targets -->
                 <div>
-                    <h4 class="font-semibold text-slate-800 text-sm mb-3">สัดส่วนสารอาหารที่แนะนำต่อวัน (Macros)</h4>
+                    <h4 class="font-semibold text-slate-800 text-sm mb-3">สัดส่วนสารอาหารที่ควรได้รับต่อวัน (Macros)</h4>
                     <div class="grid grid-cols-3 gap-3 text-center">
                         <div class="border border-indigo-200 bg-indigo-50/50 p-3 rounded-2xl">
-                            <span class="text-xs text-indigo-600 font-bold block">โปรตีน</span>
+                            <span class="text-xs text-indigo-600 font-bold block">โปรตีน (Protein)</span>
                             <span id="res-target-protein" class="text-xl font-black text-indigo-900 mt-0.5 block">0g</span>
-                            <span id="res-protein-cal" class="text-[11px] text-indigo-500">0 kcal</span>
+                            <span id="res-protein-cal" class="text-[11px] text-indigo-500">0 kcal (30%)</span>
                         </div>
                         <div class="border border-amber-200 bg-amber-50/50 p-3 rounded-2xl">
-                            <span class="text-xs text-amber-600 font-bold block">แป้ง/คาร์บ</span>
+                            <span class="text-xs text-amber-600 font-bold block">คาร์โบไฮเดรต (Carbs)</span>
                             <span id="res-target-carbs" class="text-xl font-black text-amber-900 mt-0.5 block">0g</span>
-                            <span id="res-carbs-cal" class="text-[11px] text-amber-500">0 kcal</span>
+                            <span id="res-carbs-cal" class="text-[11px] text-amber-500">0 kcal (40%)</span>
                         </div>
                         <div class="border border-rose-200 bg-rose-50/50 p-3 rounded-2xl">
-                            <span class="text-xs text-rose-600 font-bold block">ไขมัน</span>
+                            <span class="text-xs text-rose-600 font-bold block">ไขมัน (Fat)</span>
                             <span id="res-target-fat" class="text-xl font-black text-rose-900 mt-0.5 block">0g</span>
-                            <span id="res-fat-cal" class="text-[11px] text-rose-500">0 kcal</span>
+                            <span id="res-fat-cal" class="text-[11px] text-rose-500">0 kcal (30%)</span>
                         </div>
                     </div>
                 </div>
@@ -337,19 +323,20 @@
                 <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs sm:text-sm text-amber-900 leading-relaxed flex items-start gap-3">
                     <i class="fa-solid fa-lightbulb text-amber-500 text-xl mt-0.5"></i>
                     <div>
-                        <span class="font-bold block mb-0.5">คำแนะนำในการรับประทานอาหาร:</span>
+                        <span class="font-bold block mb-0.5">เคล็ดลับสำหรับการกินอาหาร:</span>
                         <p id="res-advice-text">ทานโปรตีนให้เพียงพอเพื่อรักษาการทำงานของมวลกล้ามเนื้อ</p>
                     </div>
                 </div>
 
                 <button onclick="applyTargetToDailyLog()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-sm font-medium rounded-xl transition">
-                    ตั้งค่าเป็นเป้าหมายหลักประจำวัน
+                    ตั้งค่าพลังงานนี้เป็นเป้าหมายหลักประจำวัน
                 </button>
             </div>
         </section>
 
         <!-- TAB 3: DAILY FOOD JOURNAL LOG -->
         <section id="tab-log" class="hidden space-y-6">
+            <!-- Daily Summary Card -->
             <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 space-y-4">
                 <div class="flex items-center justify-between">
                     <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
@@ -395,7 +382,7 @@
                 <div id="logged-items-container" class="space-y-3">
                     <div id="empty-log-msg" class="text-center py-8 text-slate-400 text-sm">
                         <i class="fa-solid fa-plate-wheat text-3xl mb-2 block text-slate-300"></i>
-                        ยังไม่มีรายการอาหารที่บันทึกวันนี้ ลองถ่ายรูปสแกนอาหารด้านบนได้เลย!
+                        ยังไม่มีรายการอาหารที่บันทึกวันนี้ ลองไปที่เมนูถ่ายรูปเพื่อเพิ่มอาหาร
                     </div>
                 </div>
             </div>
@@ -437,7 +424,7 @@
                     <div id="friends-feed-container" class="space-y-4">
                         <div class="text-center py-10 text-slate-400 text-sm">
                             <i class="fa-solid fa-user-group text-4xl mb-3 text-slate-300 block"></i>
-                            กดปุ่ม "ตั้งค่ากลุ่ม" เพื่อตั้งรหัสกลุ่มเดียวกับเพื่อนๆ แล้วเริ่มแชร์ไดอารี่กันได้เลย!
+                            กดปุ่ม "ตั้งค่ากลุ่ม" เพื่อสร้างกลุ่มใหม่ หรือใส่รหัสกลุ่มเดียวกับเพื่อนๆ เพื่อเริ่มแชร์ข้อมูล!
                         </div>
                     </div>
                 </div>
@@ -448,65 +435,34 @@
 
     <!-- Group Sync Modal -->
     <div id="group-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5">
+        <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5 animate-in fade-in zoom-in duration-200">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
                     <i class="fa-solid fa-users-gear text-emerald-500"></i> เข้าร่วม / สร้างกลุ่มคลาวด์
                 </h3>
-                <button onclick="closeGroupModal()" class="text-slate-400 hover:text-slate-700 p-1">
+                <button onclick="closeGroupModal()" class="text-slate-400 hover:text-slate-700">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>
 
+            <p class="text-xs text-slate-500 leading-relaxed">
+                กรอก **รหัสกลุ่ม (Group Code)** ภาษาอังกฤษหรือตัวเลขสั้นๆ เพื่อรวมกลุ่มกับเพื่อน เมื่อคุณและเพื่อนใช้รหัสกลุ่มเดียวกัน บันทึกแคลอรี่จะซิงก์หากันอัตโนมัติ!
+            </p>
+
             <div class="space-y-3">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อเล่นของคุณ</label>
-                    <input type="text" id="modal-username" placeholder="เช่น นัท, พลอย" class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-medium text-sm">
+                    <input type="text" id="modal-username" placeholder="เช่น นัท" class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-medium text-sm">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 mb-1">รหัสกลุ่ม (Group Code)</label>
                     <input type="text" id="modal-group-code" placeholder="เช่น FitGang2026" class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-medium text-sm">
-                    <p class="text-[11px] text-slate-400 mt-1">*ตั้งชื่อรหัสกลุ่มกับเพื่อนๆ ให้ตรงกันเพื่อมองเห็นบันทึกแคลอรี่ของกันและกัน</p>
                 </div>
             </div>
 
             <div class="flex gap-2">
                 <button onclick="joinGroupFromModal()" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-sm transition shadow-md">
-                    เข้าร่วมกลุ่ม
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- API Key Modal -->
-    <div id="apikey-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-5">
-            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
-                    <i class="fa-solid fa-key text-amber-500"></i> ตั้งค่า Gemini API Key (ฟรี 100%)
-                </h3>
-                <button onclick="closeApiKeyModal()" class="text-slate-400 hover:text-slate-700 p-1">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-
-            <div class="text-xs text-slate-600 space-y-2 leading-relaxed">
-                <p>ในการสแกนวิเคราะห์รูปภาพด้วย AI บน GitHub Pages ต้องใช้ **Gemini API Key** ของคุณเอง (กดขอรับฟรีจาก Google เพียง 10 วินาที)</p>
-                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="inline-flex items-center gap-1 text-emerald-600 font-bold hover:underline">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i> กดตรงนี้เพื่อรับ Gemini API Key ฟรีจาก Google
-                </a>
-            </div>
-
-            <div class="space-y-3">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-600 mb-1">วาง Gemini API Key ของคุณที่นี่</label>
-                    <input type="password" id="modal-api-key" placeholder="AIzaSy..." class="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 font-medium text-sm">
-                </div>
-            </div>
-
-            <div class="flex gap-2">
-                <button onclick="saveApiKeyFromModal()" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-sm transition shadow-md">
-                    บันทึก API Key
+                    บันทึกและเชื่อมต่อกลุ่ม
                 </button>
             </div>
         </div>
@@ -521,7 +477,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'slimforever-app';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
@@ -542,6 +498,7 @@
             db = getFirestore(app);
             auth = getAuth(app);
 
+            // Authenticate user before any query
             const authToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
             if (authToken) {
                 signInWithCustomToken(auth, authToken).catch(() => signInAnonymously(auth));
@@ -553,13 +510,14 @@
                 if (user) {
                     currentUser = user;
                     window.currentUserId = user.uid;
+                    // Auto subscribe to active group if available
                     if (window.userProfile && window.userProfile.groupCode) {
                         subscribeToCloudGroup(window.userProfile.groupCode);
                     }
                 }
             });
         } catch(err) {
-            console.log("Firebase fallback mode", err);
+            console.log("Firebase setup fallback:", err);
         }
 
         window.syncUserLogToCloud = async function() {
@@ -581,6 +539,7 @@
             };
 
             try {
+                // Read existing doc then write updated user field
                 const updateObject = {};
                 updateObject[`members.${currentUser.uid}`] = userPayload;
                 await setDoc(docRef, updateObject, { merge: true });
@@ -594,7 +553,9 @@
             const cleanCode = groupCode.trim().toLowerCase();
             if (!cleanCode) return;
 
-            if (activeGroupUnsubscribe) activeGroupUnsubscribe();
+            if (activeGroupUnsubscribe) {
+                activeGroupUnsubscribe();
+            }
 
             const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'groups', cleanCode);
             activeGroupUnsubscribe = onSnapshot(docRef, (snapshot) => {
@@ -604,7 +565,9 @@
                 } else {
                     window.renderFriendsFeed({});
                 }
-            }, (err) => console.log("Group snapshot error:", err));
+            }, (err) => {
+                console.log("Group snapshot error:", err);
+            });
         };
     </script>
 
@@ -627,18 +590,20 @@
             items: []
         };
 
+        // Initialize Application on Page Load
         window.addEventListener('DOMContentLoaded', () => {
             loadStoredData();
             calculateEnergyNeeds();
             updateDailyLogUI();
-            updateApiKeyUI();
 
+            // Check URL parameters for group code
             const urlParams = new URLSearchParams(window.location.search);
             const shareGroup = urlParams.get('group');
             if (shareGroup) {
                 window.userProfile.groupCode = shareGroup;
+                document.getElementById('modal-group-code').value = shareGroup;
                 saveUserProfileData();
-                showToast(`โหลดรหัสกลุ่ม "${shareGroup}" แล้ว`, "info");
+                showToast(`โหลดรหัสกลุ่ม "${shareGroup}" เรียบร้อยแล้ว`, "info");
             }
 
             updateGroupUI();
@@ -650,10 +615,10 @@
                 const btnEl = document.getElementById(`tab-btn-${tab}`);
                 if (tab === tabName) {
                     tabEl.classList.remove('hidden');
-                    btnEl.className = "flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-sm font-semibold";
+                    btnEl.className = "flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 bg-white text-emerald-700 shadow-sm font-semibold";
                 } else {
                     tabEl.classList.add('hidden');
-                    btnEl.className = "flex-1 py-2.5 px-2 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium";
+                    btnEl.className = "flex-1 py-2.5 px-2.5 rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 text-slate-600 hover:text-slate-900 font-medium";
                 }
             });
         }
@@ -685,177 +650,72 @@
 
         async function analyzeFoodImage() {
             if (!currentSelectedImageBase64) return;
-
             const loadingEl = document.getElementById('scan-loading');
             const resultEl = document.getElementById('scan-result');
             const analyzeBtn = document.getElementById('analyze-btn');
-
-            loadingEl.classList.remove('hidden');
-            resultEl.classList.add('hidden');
-            analyzeBtn.disabled = true;
-
-            const savedApiKey = localStorage.getItem('gemini_user_api_key') || '';
-
-            if (!savedApiKey) {
-                setTimeout(() => {
-                    const fallbackResult = generateSmartFallbackAnalysis();
-                    lastAnalyzedFood = fallbackResult;
-                    displayAnalysisResult(fallbackResult, false);
-                    loadingEl.classList.add('hidden');
-                    analyzeBtn.disabled = false;
-                    showToast("กรุณาใส่ Gemini API Key เพื่อวิเคราะห์รูปอาหารจริงของคุณ", "info");
-                    openApiKeyModal();
-                }, 600);
-                return;
-            }
-
+            loadingEl.classList.remove('hidden'); resultEl.classList.add('hidden'); analyzeBtn.disabled = true;
             try {
                 const base64Data = currentSelectedImageBase64.split(',')[1];
-                const mimeType = currentSelectedImageBase64.substring(
-                    currentSelectedImageBase64.indexOf(":") + 1, 
-                    currentSelectedImageBase64.indexOf(";")
-                );
-
-                const extraNote = document.getElementById('user-food-note')?.value.trim() || '';
-
-                const prompt = `คุณคือระบบ AI ผู้เชี่ยวชาญด้านโภชนาการและการวิเคราะห์ภาพถ่ายอาหารขั้นสูง (Expert Food & Nutrition Computer Vision)
-
-หน้าที่ของคุณคือวิเคราะห์ภาพถ่ายอาหาร/เครื่องดื่มอย่างแม่นยำที่สุด โดยทำตามขั้นตอนและหลักเกณฑ์ต่อไปนี้อย่างเคร่งครัด:
-
-${extraNote ? `[คำอธิบายเพิ่มเติมจากผู้ใช้]: "${extraNote}" (ให้นำบริบทนี้ไปร่วมวิเคราะห์ด้วย เช่น ความหวาน ปริมาณ หรือชนิดเครื่องดื่ม)` : ''}
-
-1. **การคัดแยกประเภทวัตถุ (Categorization):**
-   - ตรวจสอบภาชนะเป็นอันดับแรก (แก้วน้ำ, ขวด, ถ้วย, จาน) เพื่อแยกแยะ "ของเหลว/เครื่องดื่ม" ออกจาก "อาหารของแข็ง"
-   - หากเป็น **น้ำเปล่า / น้ำแร่ / โซดาไม่ใส่น้ำตาล / น้ำใส** ให้ระบุเป็นประเภท "water" และกำหนด Calories = 0 kcal, โปรตีน 0g, คาร์บ 0g, ไขมัน 0g ทันที ห้ามสับสนเป็นอาหารเด็ดขาด!
-   - หากเป็น **เครื่องดื่มหวาน / ชานม / กาแฟ / นม** ให้ประเมินระดับความหวาน ท็อปปิ้ง (ไข่มุก/ฟองนม) แล้วคำนวณแคลอรี่ตามขนาดแก้ว
-   - หากเป็น **อาหารของแข็ง / ข้าว / กับข้าว** ให้ระบุส่วนประกอบหลักให้ถูกต้อง
-
-2. **การประเมินขนาด ปริมาณ และความลึก (Portion & Depth Estimation):**
-   - ให้สังเกตขนาดภาชนะเทียบกับวัตถุรอบข้าง (เช่น ช้อน, ส้อม, มือ, แก้ว, จานมาตรฐาน 22-25 cm)
-   - ประเมิน "ความหนา/ความลึก/ปริมาณจริง" ของอาหารในจาน ไม่ใช่ดูแค่พื้นที่ความกว้าง 2D
-   - **สำคัญมาก**: ห้ามเหมาคำนวณเป็นจานมาตรฐาน (400-500 kcal) เสมอไป หากในภาพมีอาหารเพียงเล็กน้อย (เช่น มีข้าว 2-3 คำ, มีเศษอาหาร, หรือมีอาหารแค่ 1/4 จาน) ให้ประเมินน้ำหนักจริงเป็นกรัม (g) แล้วปรับลดแคลอรี่ลงมาตามจริงทันที (เช่น 50-150 kcal)
-
-3. **รูปแบบการตอบกลับ (Output Format):**
-   ต้องตอบกลับเป็น JSON ภาษาไทยเท่านั้น ตามโครงสร้างต่อไปนี้ (ห้ามมี Markdown ย้อนกลับหรือข้อความอื่นนอกเหนือจาก JSON):
-{
-  "foodName": "ชื่อเมนู หรือ เครื่องดื่มภาษาไทยที่แม่นยำ",
-  "category": "food" หรือ "beverage" หรือ "water",
-  "portion": "ปริมาณประเมินจากภาพจริง (เช่น ประมาณ 100g / 1/3 ของจาน / แก้ว 250ml)",
-  "calories": 150,
-  "proteinGrams": 12,
-  "carbsGrams": 15,
-  "fatGrams": 4,
-  "fiberGrams": 1,
-  "healthSummary": "อธิบายสั้นๆ ว่าทำไมถึงประเมินแคลอรี่เท่านี้ และคำแนะนำโภชนาการ"
-}`;
-
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${savedApiKey}`;
-
-                const payload = {
-                    contents: [
-                        {
-                            role: "user",
-                            parts: [
-                                { text: prompt },
-                                { inlineData: { mimeType: mimeType || "image/jpeg", data: base64Data } }
-                            ]
-                        }
-                    ],
-                    generationConfig: { 
-                        temperature: 0.2,
-                        responseMimeType: "application/json" 
-                    }
-                };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) throw new Error(`API Status: ${response.status}`);
-
+                const mimeType = currentSelectedImageBase64.substring(currentSelectedImageBase64.indexOf(':')+1,currentSelectedImageBase64.indexOf(';'));
+                const prompt = `วิเคราะห์ภาพอาหารอย่างเคร่งครัดและตอบ JSON เท่านั้น
+กฎ: แยกวัตถุทุกชิ้นเป็น FOOD/DRINK/CONTAINER/NON_FOOD; น้ำเปล่า น้ำแข็ง จาน ชาม แก้ว ช้อน โต๊ะ และภาชนะห้ามนับเป็นอาหาร; ประเมินเฉพาะส่วนที่กินได้จริง ไม่ใช้ขนาดจานเป็นน้ำหนัก; ต้องคำนวณแคลจาก edibleGrams หรือ volumeMl และ kcalPer100g; ถ้าอาหารมีน้อยต้องให้กรัมตามสัดส่วนที่เห็นและห้ามเดา portion ใหญ่; ถ้าไม่ชัดให้ confidence ต่ำและ needsConfirmation=true; ห้ามสร้างแคลจากชื่อเมนูอย่างเดียว; เมนูผสมให้แยกส่วนประกอบเท่าที่เห็นจริง
+โครงสร้าง: {"foodName":"","portion":"","calories":0,"proteinGrams":0,"carbsGrams":0,"fatGrams":0,"fiberGrams":0,"confidence":0,"needsConfirmation":false,"healthSummary":"","items":[{"name":"","category":"FOOD","edibleGrams":0,"volumeMl":0,"kcalPer100g":0,"calories":0,"proteinGrams":0,"carbsGrams":0,"fatGrams":0,"fiberGrams":0,"confidence":0,"isWater":false,"needsConfirmation":false,"reason":""}]}`;
+                const systemPrompt = 'คุณเป็นผู้เชี่ยวชาญโภชนาการและ computer vision เป้าหมายคือลดการประเมินแคลเกินจริงและไม่นับน้ำ/ภาชนะ หากไม่มีข้อมูลพอให้ยอมรับความไม่แน่นอน ห้ามอ้างว่าชั่งน้ำหนักจริงจากภาพ';
+                const apiKey = '';
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKeyValue}`;
+                const payload = {contents:[{role:'user',parts:[{text:prompt},{inlineData:{mimeType:mimeType||'image/jpeg',data:base64Data}}]}],generationConfig:{responseMimeType:'application/json',temperature:0.1,maxOutputTokens:4096},systemInstruction:{parts:[{text:systemPrompt}]}};
+                const response = await fetchWithRetry(apiUrl,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+                if (!response.ok) throw new Error(`API ${response.status}`);
                 const data = await response.json();
-                let parsedResult;
-                if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
-                    parsedResult = JSON.parse(data.candidates[0].content.parts[0].text);
-                } else {
-                    throw new Error("Invalid AI response");
+                const raw = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!raw) throw new Error('AI response invalid');
+                lastAnalyzedFood = normalizeFoodAnalysis(JSON.parse(raw));
+                document.getElementById('result-food-name').innerText=lastAnalyzedFood.foodName;
+                document.getElementById('result-portion').innerText=`ปริมาณประมาณ: ${lastAnalyzedFood.portion}${lastAnalyzedFood.confidence<0.6?' • ความมั่นใจต่ำ':''}`;
+                document.getElementById('result-calories').innerText=lastAnalyzedFood.calories;
+                document.getElementById('result-protein').innerText=lastAnalyzedFood.proteinGrams;
+                document.getElementById('result-carbs').innerText=lastAnalyzedFood.carbsGrams;
+                document.getElementById('result-fat').innerText=lastAnalyzedFood.fatGrams;
+                document.getElementById('result-fiber').innerText=lastAnalyzedFood.fiberGrams;
+                document.getElementById('result-health-summary').innerText=lastAnalyzedFood.healthSummary+(lastAnalyzedFood.needsConfirmation?' • ควรตรวจปริมาณก่อนบันทึก':'');
+                renderAnalyzedItems(lastAnalyzedFood.items,lastAnalyzedFood.needsConfirmation);
+                resultEl.classList.remove('hidden');
+                showToast(lastAnalyzedFood.needsConfirmation?'วิเคราะห์แล้ว แต่ควรตรวจสอบปริมาณ':'วิเคราะห์อาหารสำเร็จ!',lastAnalyzedFood.needsConfirmation?'info':'success');
+            } catch(error) { console.error(error); showToast(error.message?.includes('API 400')||error.message?.includes('API 403')?'API Key หรือการตั้งค่า AI ยังไม่ถูกต้อง':'ไม่สามารถวิเคราะห์รูปภาพได้ กรุณาลองใหม่อีกครั้ง','error'); }
+            finally { loadingEl.classList.add('hidden'); analyzeBtn.disabled=false; }
+        }
+
+        function normalizeFoodAnalysis(result) {
+            const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
+            const items=(Array.isArray(result.items)?result.items:[]).map(i=>({name:String(i.name||'อาหาร'),category:String(i.category||'FOOD').toUpperCase(),edibleGrams:Math.max(0,n(i.edibleGrams)),volumeMl:Math.max(0,n(i.volumeMl)),kcalPer100g:Math.max(0,n(i.kcalPer100g)),calories:Math.max(0,Math.round(n(i.calories))),proteinGrams:Math.max(0,n(i.proteinGrams)),carbsGrams:Math.max(0,n(i.carbsGrams)),fatGrams:Math.max(0,n(i.fatGrams)),fiberGrams:Math.max(0,n(i.fiberGrams)),confidence:Math.min(1,Math.max(0,n(i.confidence))),isWater:Boolean(i.isWater),needsConfirmation:Boolean(i.needsConfirmation),reason:String(i.reason||'')})).filter(i=>i.category==='FOOD'&&!i.isWater&&!/^(น้ำ|water|ice|น้ำแข็ง)$/i.test(i.name.trim()));
+            items.forEach(i=>{if(i.edibleGrams>0&&i.kcalPer100g>0)i.calories=Math.round(i.edibleGrams*i.kcalPer100g/100);if(i.edibleGrams>0&&i.calories>i.edibleGrams*9){i.calories=Math.round(i.edibleGrams*9);i.needsConfirmation=true;}});
+            const t=items.reduce((a,i)=>{a.calories+=i.calories;a.proteinGrams+=i.proteinGrams;a.carbsGrams+=i.carbsGrams;a.fatGrams+=i.fatGrams;a.fiberGrams+=i.fiberGrams;return a},{calories:0,proteinGrams:0,carbsGrams:0,fatGrams:0,fiberGrams:0});
+            const cs=items.map(i=>i.confidence).filter(Boolean); const confidence=cs.length?cs.reduce((a,b)=>a+b,0)/cs.length:n(result.confidence,0);
+            const needsConfirmation=Boolean(result.needsConfirmation)||confidence<0.6||items.some(i=>i.needsConfirmation);
+            const grams=items.reduce((s,i)=>s+i.edibleGrams,0);
+            return {foodName:items.length?items.map(i=>i.name).join(' + '):'ไม่พบอาหารที่ประเมินได้',portion:grams?`อาหารกินได้รวมประมาณ ${Math.round(grams)} กรัม`:'ไม่สามารถประเมินปริมาณได้จากภาพ',calories:t.calories,proteinGrams:Math.round(t.proteinGrams*10)/10,carbsGrams:Math.round(t.carbsGrams*10)/10,fatGrams:Math.round(t.fatGrams*10)/10,fiberGrams:Math.round(t.fiberGrams*10)/10,confidence,needsConfirmation,healthSummary:String(result.healthSummary||'ควรตรวจปริมาณอาหารอีกครั้ง'),items};
+        }
+
+        function renderAnalyzedItems(items,needsConfirmation) {
+            let box=document.getElementById('analyzed-items-box'); if(!box){box=document.createElement('div');box.id='analyzed-items-box';box.className='bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-3';const result=document.getElementById('scan-result');const action=result.querySelector('button[onclick="logCurrentScannedFood()"]');result.insertBefore(box,action);}
+            box.innerHTML=`<div class="flex items-center justify-between"><h4 class="font-bold text-slate-800 text-sm">รายการที่ AI แยกได้</h4>${needsConfirmation?'<span class="text-[11px] px-2 py-1 rounded-full bg-amber-100 text-amber-700 font-semibold">ควรตรวจสอบ</span>':''}</div>`+(items.length?items.map(i=>`<div class="bg-white border border-slate-100 rounded-xl p-3 flex justify-between"><div><div class="font-semibold text-slate-800 text-sm">${escapeHtml(i.name)}</div><div class="text-[11px] text-slate-400">${i.edibleGrams?`กินได้ ~${Math.round(i.edibleGrams)}g`:'ไม่ทราบน้ำหนัก'} • มั่นใจ ${Math.round(i.confidence*100)}%</div></div><div class="font-bold text-emerald-600 text-sm">${i.calories} kcal</div></div>`).join(''):'<p class="text-sm text-slate-500">ไม่พบอาหารที่ประเมินได้</p>');
+        }
+        function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));}
+
+        async function fetchWithRetry(url, options, retries = 3, backoff = 1000) {
+            try {
+                const res = await fetch(url, options);
+                if (!res.ok && res.status === 429 && retries > 0) {
+                    await new Promise(r => setTimeout(r, backoff));
+                    return fetchWithRetry(url, options, retries - 1, backoff * 2);
                 }
-
-                lastAnalyzedFood = parsedResult;
-                displayAnalysisResult(parsedResult, true);
-                showToast("วิเคราะห์ภาพถ่ายด้วย AI สำเร็จ!", "success");
-
-            } catch (error) {
-                console.error('Error analyzing image:', error);
-                const fallbackResult = generateSmartFallbackAnalysis();
-                lastAnalyzedFood = fallbackResult;
-                displayAnalysisResult(fallbackResult, false);
-                showToast("เกิดข้อผิดพลาดในการเชื่อมต่อ (โปรดตรวจสอบ Gemini API Key)", "error");
-            } finally {
-                loadingEl.classList.add('hidden');
-                analyzeBtn.disabled = false;
-            }
-        }
-
-        function generateSmartFallbackAnalysis() {
-            return {
-                foodName: "โหมดตัวอย่าง (ยังไม่ได้ใส่ API Key)",
-                portion: "1 จาน / 1 แก้ว",
-                calories: 0,
-                proteinGrams: 0,
-                carbsGrams: 0,
-                fatGrams: 0,
-                fiberGrams: 0,
-                healthSummary: "⚠️ กรุณากดปุ่ม 'ใส่ API Key (ฟรี)' ที่มุมขวาบน หรือรับ Key ฟรีจาก Google เพื่อให้ AI วิเคราะห์ภาพอาหารตามปริมาณจริงครับ"
-            };
-        }
-
-        function displayAnalysisResult(parsedResult, isLiveAi = true) {
-            document.getElementById('result-badge').innerText = isLiveAi ? "ผลวิเคราะห์ Gemini AI (ความแม่นยำสูง)" : "ประเมินด้วย Smart AI";
-            document.getElementById('result-food-name').innerText = parsedResult.foodName || 'เมนูที่สแกน';
-            document.getElementById('result-portion').innerText = `ปริมาณประเมินจริง: ${parsedResult.portion || '1 จาน/แก้ว'}`;
-            document.getElementById('result-calories').innerText = parsedResult.calories ?? 0;
-            document.getElementById('result-protein').innerText = parsedResult.proteinGrams ?? 0;
-            document.getElementById('result-carbs').innerText = parsedResult.carbsGrams ?? 0;
-            document.getElementById('result-fat').innerText = parsedResult.fatGrams ?? 0;
-            document.getElementById('result-fiber').innerText = parsedResult.fiberGrams ?? 0;
-            document.getElementById('result-health-summary').innerText = parsedResult.healthSummary || 'ไม่มีคำแนะนำเพิ่มเติม';
-            document.getElementById('scan-result').classList.remove('hidden');
-        }
-
-        function openApiKeyModal() {
-            document.getElementById('modal-api-key').value = localStorage.getItem('gemini_user_api_key') || '';
-            document.getElementById('apikey-modal').classList.remove('hidden');
-        }
-
-        function closeApiKeyModal() {
-            document.getElementById('apikey-modal').classList.add('hidden');
-        }
-
-        function saveApiKeyFromModal() {
-            const apiKey = document.getElementById('modal-api-key').value.trim();
-            if (apiKey) {
-                localStorage.setItem('gemini_user_api_key', apiKey);
-                showToast("บันทึก Gemini API Key เรียบร้อยแล้ว!", "success");
-            } else {
-                localStorage.removeItem('gemini_user_api_key');
-                showToast("ลบ API Key เรียบร้อยแล้ว", "info");
-            }
-            updateApiKeyUI();
-            closeApiKeyModal();
-        }
-
-        function updateApiKeyUI() {
-            const key = localStorage.getItem('gemini_user_api_key');
-            const statusEl = document.getElementById('header-apikey-status');
-            if (key) {
-                statusEl.innerText = "API Key: เชื่อมต่อแล้ว";
-                statusEl.parentElement.className = "flex items-center gap-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl font-semibold border border-emerald-300 transition";
-            } else {
-                statusEl.innerText = "ใส่ API Key (ฟรี)";
-                statusEl.parentElement.className = "flex items-center gap-1.5 bg-amber-100 hover:bg-amber-200 text-amber-800 text-xs px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl font-semibold border border-amber-300 transition";
+                return res;
+            } catch (err) {
+                if (retries > 0) {
+                    await new Promise(r => setTimeout(r, backoff));
+                    return fetchWithRetry(url, options, retries - 1, backoff * 2);
+                }
+                throw err;
             }
         }
 
@@ -872,8 +732,13 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
             const activity = parseFloat(document.getElementById('calc-activity').value) || 1.375;
             const goal = document.getElementById('calc-goal').value;
 
+            // Mifflin-St Jeor Formula
             let bmr = (10 * weight) + (6.25 * height) - (5 * age);
-            bmr = gender === 'male' ? bmr + 5 : bmr - 161;
+            if (gender === 'male') {
+                bmr += 5;
+            } else {
+                bmr -= 161;
+            }
 
             const tdee = bmr * activity;
             let targetCalories = tdee;
@@ -893,9 +758,13 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
                 goalTagText = "สำหรับการสร้างมวลกล้ามเนื้อ";
             }
 
-            const proteinGrams = Math.round((targetCalories * 0.30) / 4);
-            const carbsGrams = Math.round((targetCalories * 0.40) / 4);
-            const fatGrams = Math.round((targetCalories * 0.30) / 9);
+            const proteinCal = targetCalories * 0.30;
+            const carbsCal = targetCalories * 0.40;
+            const fatCal = targetCalories * 0.30;
+
+            const proteinGrams = Math.round(proteinCal / 4);
+            const carbsGrams = Math.round(carbsCal / 4);
+            const fatGrams = Math.round(fatCal / 9);
 
             document.getElementById('res-bmr').innerText = Math.round(bmr);
             document.getElementById('res-tdee').innerText = Math.round(tdee);
@@ -903,17 +772,22 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
             document.getElementById('res-goal-tag').innerText = goalTagText;
 
             document.getElementById('res-target-protein').innerText = `${proteinGrams}g`;
-            document.getElementById('res-protein-cal').innerText = `${Math.round(targetCalories * 0.30)} kcal`;
+            document.getElementById('res-protein-cal').innerText = `${Math.round(proteinCal)} kcal (30%)`;
 
             document.getElementById('res-target-carbs').innerText = `${carbsGrams}g`;
-            document.getElementById('res-carbs-cal').innerText = `${Math.round(targetCalories * 0.40)} kcal`;
+            document.getElementById('res-carbs-cal').innerText = `${Math.round(carbsCal)} kcal (40%)`;
 
             document.getElementById('res-target-fat').innerText = `${fatGrams}g`;
-            document.getElementById('res-fat-cal').innerText = `${Math.round(targetCalories * 0.30)} kcal`;
+            document.getElementById('res-fat-cal').innerText = `${Math.round(fatCal)} kcal (30%)`;
 
-            let advice = goal.includes('lose') 
-                ? `ควรเน้นโปรตีน ${proteinGrams}g/วัน ร่วมกับการเลี่ยงเครื่องดื่มหวานและอาหารทอด เพื่อช่วยให้อิ่มนานและรักษามวลกล้ามเนื้อ`
-                : `เน้นทานอาหารครบ 5 หมู่ และกระจายพลังงานให้สม่ำเสมอในแต่ละมื้อ`;
+            let advice = "";
+            if (goal.includes('lose')) {
+                advice = `สำหรับการลดน้ำหนัก ควรทานโปรตีนให้ถึงประมาณ ${proteinGrams}g ต่อวัน เพื่อรักษาเนื้อมวลกล้ามเนื้อ และลดน้ำมันหรือคาร์บเชิงเดี่ยว`;
+            } else if (goal === 'maintain') {
+                advice = `เพื่อรักษาน้ำหนักให้คงที่ พยายามรับประทานอาหารให้สมดุลครบ 5 หมู่ และเน้นกิจกรรมทางกายอย่างสม่ำเสมอ`;
+            } else {
+                advice = `สำหรับการเพิ่มมวลกล้ามเนื้อ ให้ทานอาหารที่มีโปรตีนสูงควบคู่กับการฝึกWeight Training`;
+            }
             document.getElementById('res-advice-text').innerText = advice;
 
             window.userProfile.targetCalories = Math.round(targetCalories);
@@ -926,22 +800,15 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
             saveUserProfileData();
             updateDailyLogUI();
             if (window.syncUserLogToCloud) window.syncUserLogToCloud();
-            showToast("ตั้งค่าเป้าหมายแคลอรี่เรียบร้อยแล้ว!", "success");
+            showToast("ตั้งค่าเป้าหมายแคลอรี่ประจำวันเรียบร้อยแล้ว!", "success");
             switchTab('log');
         }
 
         function logCurrentScannedFood() {
             if (!lastAnalyzedFood) return;
-
-            window.dailyLog.items.push({
-                id: Date.now(),
-                name: lastAnalyzedFood.foodName || 'รายการที่สแกน',
-                calories: parseInt(lastAnalyzedFood.calories) || 0,
-                protein: parseInt(lastAnalyzedFood.proteinGrams) || 0,
-                carbs: parseInt(lastAnalyzedFood.carbsGrams) || 0,
-                fat: parseInt(lastAnalyzedFood.fatGrams) || 0,
-                time: new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })
-            });
+            const foods=(lastAnalyzedFood.items||[]).filter(i=>i.category==='FOOD'&&!i.isWater&&i.calories>0);
+            if(!foods.length){showToast('ไม่พบอาหารที่มีแคลอรี่สำหรับบันทึก','info');return;}
+            foods.forEach((food,index)=>window.dailyLog.items.push({id:Date.now()+index,name:food.name,calories:Math.round(food.calories),protein:Math.round(food.proteinGrams*10)/10,carbs:Math.round(food.carbsGrams*10)/10,fat:Math.round(food.fatGrams*10)/10,portion:food.edibleGrams?`${Math.round(food.edibleGrams)} g`:'',time:new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})}));
 
             saveDailyLogData();
             updateDailyLogUI();
@@ -963,7 +830,7 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
             saveDailyLogData();
             updateDailyLogUI();
             if (window.syncUserLogToCloud) window.syncUserLogToCloud();
-            showToast("ล้างรายการอาหารเรียบร้อย", "info");
+            showToast("ล้างรายการอาหารของวันนี้เรียบร้อย", "info");
         }
 
         function updateDailyLogUI() {
@@ -982,16 +849,19 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
             const percent = Math.min(Math.round((totalCal / window.userProfile.targetCalories) * 100), 100);
             const progressBar = document.getElementById('log-progress-bar');
             progressBar.style.width = `${percent}%`;
-            progressBar.className = totalCal > window.userProfile.targetCalories 
-                ? "bg-rose-500 h-full rounded-full transition-all duration-500" 
-                : "bg-emerald-500 h-full rounded-full transition-all duration-500";
+            
+            if (totalCal > window.userProfile.targetCalories) {
+                progressBar.className = "bg-rose-500 h-full rounded-full transition-all duration-500";
+            } else {
+                progressBar.className = "bg-emerald-500 h-full rounded-full transition-all duration-500";
+            }
 
             const container = document.getElementById('logged-items-container');
             if (window.dailyLog.items.length === 0) {
                 container.innerHTML = `
                     <div id="empty-log-msg" class="text-center py-8 text-slate-400 text-sm">
                         <i class="fa-solid fa-plate-wheat text-3xl mb-2 block text-slate-300"></i>
-                        ยังไม่มีรายการอาหารที่บันทึกวันนี้ ลองถ่ายรูปสแกนอาหารด้านบนได้เลย!
+                        ยังไม่มีรายการอาหารที่บันทึกวันนี้ ลองไปที่เมนูถ่ายรูปเพื่อเพิ่มอาหาร
                     </div>`;
             } else {
                 container.innerHTML = window.dailyLog.items.map(item => `
@@ -1051,7 +921,7 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
                 statusEl.innerText = `กลุ่ม: ${window.userProfile.groupCode}`;
                 activeGroupEl.innerText = `กลุ่ม: ${window.userProfile.groupCode} (${window.userProfile.userName})`;
             } else {
-                statusEl.innerText = `แก๊งเพื่อน`;
+                statusEl.innerText = `แชร์กลุ่มกับเพื่อน`;
                 activeGroupEl.innerText = `ยังไม่ได้เข้าร่วมกลุ่ม`;
             }
         }
@@ -1083,7 +953,7 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
                                 </div>
                                 <div>
                                     <h4 class="font-bold text-slate-800 text-sm">${member.userName || 'เพื่อน'}</h4>
-                                    <p class="text-[11px] text-slate-400">อัปเดตเมื่อสักครู่</p>
+                                    <p class="text-[11px] text-slate-400">อัปเดตล่าสุด ${member.lastUpdated ? new Date(member.lastUpdated).toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'}) : 'เมื่อสักครู่'}น.</p>
                                 </div>
                             </div>
                             <div class="text-right">
@@ -1092,15 +962,17 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
                             </div>
                         </div>
 
+                        <!-- Progress Bar -->
                         <div>
                             <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
                                 <div class="${isOver ? 'bg-rose-500' : 'bg-emerald-500'} h-full rounded-full" style="width: ${percent}%"></div>
                             </div>
                         </div>
 
+                        <!-- Recent Meals -->
                         ${member.items && member.items.length > 0 ? `
                             <div class="bg-white rounded-xl p-2.5 text-xs text-slate-600 space-y-1 border border-slate-100">
-                                <span class="font-semibold text-slate-400 text-[10px] uppercase block">รายการวันนี้:</span>
+                                <span class="font-semibold text-slate-400 text-[10px] uppercase block">เมนูอาหารวันนี้:</span>
                                 ${member.items.map(i => `<div class="flex justify-between"><span>• ${i.name}</span><span class="font-medium text-slate-500">${i.calories} kcal</span></div>`).join('')}
                             </div>
                         ` : '<p class="text-xs text-slate-400 italic">ยังไม่ได้บันทึกรายการอาหารวันนี้</p>'}
@@ -1117,6 +989,7 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
             
             const shareText = `มาร่วมคุมแคลอรี่และลดน้ำหนักไปด้วยกันใน SlimForever AI!\nรหัสกลุ่ม: ${window.userProfile.groupCode}`;
             
+            // Clipboard copy implementation using execCommand for iframe compatibility
             const tempInput = document.createElement("textarea");
             tempInput.value = shareText;
             document.body.appendChild(tempInput);
@@ -1128,17 +1001,23 @@ ${extraNote ? `[คำอธิบายเพิ่มเติมจากผ�
         }
 
         function saveUserProfileData() {
-            try { localStorage.setItem('nutri_user_profile', JSON.stringify(window.userProfile)); } catch(e){}
+            try {
+                localStorage.setItem('nutri_user_profile', JSON.stringify(window.userProfile));
+            } catch(e){}
         }
 
         function saveDailyLogData() {
-            try { localStorage.setItem('nutri_daily_log', JSON.stringify(window.dailyLog)); } catch(e){}
+            try {
+                localStorage.setItem('nutri_daily_log', JSON.stringify(window.dailyLog));
+            } catch(e){}
         }
 
         function loadStoredData() {
             try {
                 const savedProfile = localStorage.getItem('nutri_user_profile');
-                if (savedProfile) window.userProfile = Object.assign(window.userProfile, JSON.parse(savedProfile));
+                if (savedProfile) {
+                    window.userProfile = Object.assign(window.userProfile, JSON.parse(savedProfile));
+                }
 
                 const savedLog = localStorage.getItem('nutri_daily_log');
                 if (savedLog) {
