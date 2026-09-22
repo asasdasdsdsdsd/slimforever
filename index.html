@@ -105,6 +105,14 @@
                 </h2>
                 <p class="text-slate-500 text-sm mb-4">อัปโหลดรูปภาพจานอาหาร ข้าว ชานม กาแฟ หรือน้ำหวาน AI จะช่วยประเมินแคลอรี่ คาร์บ โปรตีน และไขมันให้อัตโนมัติ</p>
 
+                <!-- Optional User Hint/Context for Better Accuracy -->
+                <div class="mb-4">
+                    <label for="user-food-note" class="block text-xs font-semibold text-slate-600 mb-1">
+                        <i class="fa-solid fa-pen-to-square text-emerald-500 mr-1"></i>ระบุรายละเอียดเพิ่มเติม (ช่วยให้ AI คำนวณแม่นยำขึ้นมาก):
+                    </label>
+                    <input type="text" id="user-food-note" placeholder="เช่น ทานครึ่งจาน, น้ำเปล่า, หวานน้อย 25%, ไม่ใส่น้ำมัน" class="w-full border border-slate-200 rounded-xl px-3.5 py-2 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 text-slate-800">
+                </div>
+
                 <!-- Dropzone / Camera -->
                 <div id="image-dropzone" class="border-2 border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50 hover:bg-emerald-50/30 rounded-2xl p-6 text-center transition cursor-pointer relative overflow-hidden group">
                     <input type="file" id="food-image-input" accept="image/*" class="hidden" onchange="handleImageSelect(event)">
@@ -142,7 +150,7 @@
             <div id="scan-loading" class="hidden bg-white rounded-3xl p-8 text-center shadow-sm border border-slate-200 space-y-4">
                 <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-emerald-500 border-t-transparent"></div>
                 <h3 class="font-bold text-slate-800 text-lg">กำลังประมวลผลด้วย AI...</h3>
-                <p class="text-slate-500 text-sm max-w-md mx-auto">กำลังสแกนส่วนประกอบ ประเมินปริมาณ และคำนวณแคลอรี่ แป้ง โปรตีน ไขมัน และน้ำตาล</p>
+                <p class="text-slate-500 text-sm max-w-md mx-auto">กำลังสแกนภาชนะ สัดส่วนวัตถุดิบ ความลึกของอาหาร และวิเคราะห์ปริมาณแคลอรี่ คาร์บ โปรตีน ไขมันอย่างแม่นยำ</p>
             </div>
 
             <!-- Analysis Result Dashboard -->
@@ -186,7 +194,7 @@
                 <!-- Health Summary & Advice -->
                 <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80">
                     <h4 class="font-bold text-slate-800 text-sm mb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-heart-pulse text-rose-500"></i> คำแนะนำทางโภชนาการ
+                        <i class="fa-solid fa-heart-pulse text-rose-500"></i> คำแนะนำทางโภชนาการ & เหตุผลการประเมิน
                     </h4>
                     <p id="result-health-summary" class="text-slate-600 text-sm leading-relaxed">สรุปจาก AI จะแสดงที่นี่</p>
                 </div>
@@ -689,7 +697,6 @@
             const savedApiKey = localStorage.getItem('gemini_user_api_key') || '';
 
             if (!savedApiKey) {
-                // หากยังไม่ได้ใส่ API Key ให้แจ้งเตือนและเปิดป๊อปอัพให้ใส่ Key ทันที
                 setTimeout(() => {
                     const fallbackResult = generateSmartFallbackAnalysis();
                     lastAnalyzedFood = fallbackResult;
@@ -709,19 +716,37 @@
                     currentSelectedImageBase64.indexOf(";")
                 );
 
-                const prompt = `คุณคือระบบ AI นักโภชนาการ วิเคราะห์ภาพถ่ายนี้อย่างแม่นยำที่สุด:
-1. ตรวจสอบอย่างถี่ถ้วนว่าเป็น "อาหารจานหลัก/กับข้าว/ของทานเล่น" หรือ "เครื่องดื่ม/น้ำหวาน/ชา/กาแฟ" (ห้ามระบุสับสนระหว่างอาหารจานกับแก้วน้ำเด็ดขาด)
-2. ระบุชื่อเมนูที่เห็นในรูปตามความเป็นจริง และประมาณค่าแคลอรี่ โปรตีน คาร์โบไฮเดรต ไขมัน และใยอาหาร
-3. ตอบกลับเป็น JSON ภาษาไทยตามโครงสร้างนี้เท่านั้น:
+                const extraNote = document.getElementById('user-food-note')?.value.trim() || '';
+
+                const prompt = `คุณคือระบบ AI ผู้เชี่ยวชาญด้านโภชนาการและการวิเคราะห์ภาพถ่ายอาหารขั้นสูง (Expert Food & Nutrition Computer Vision)
+
+หน้าที่ของคุณคือวิเคราะห์ภาพถ่ายอาหาร/เครื่องดื่มอย่างแม่นยำที่สุด โดยทำตามขั้นตอนและหลักเกณฑ์ต่อไปนี้อย่างเคร่งครัด:
+
+${extraNote ? `[คำอธิบายเพิ่มเติมจากผู้ใช้]: "${extraNote}" (ให้นำบริบทนี้ไปร่วมวิเคราะห์ด้วย เช่น ความหวาน ปริมาณ หรือชนิดเครื่องดื่ม)` : ''}
+
+1. **การคัดแยกประเภทวัตถุ (Categorization):**
+   - ตรวจสอบภาชนะเป็นอันดับแรก (แก้วน้ำ, ขวด, ถ้วย, จาน) เพื่อแยกแยะ "ของเหลว/เครื่องดื่ม" ออกจาก "อาหารของแข็ง"
+   - หากเป็น **น้ำเปล่า / น้ำแร่ / โซดาไม่ใส่น้ำตาล / น้ำใส** ให้ระบุเป็นประเภท "water" และกำหนด Calories = 0 kcal, โปรตีน 0g, คาร์บ 0g, ไขมัน 0g ทันที ห้ามสับสนเป็นอาหารเด็ดขาด!
+   - หากเป็น **เครื่องดื่มหวาน / ชานม / กาแฟ / นม** ให้ประเมินระดับความหวาน ท็อปปิ้ง (ไข่มุก/ฟองนม) แล้วคำนวณแคลอรี่ตามขนาดแก้ว
+   - หากเป็น **อาหารของแข็ง / ข้าว / กับข้าว** ให้ระบุส่วนประกอบหลักให้ถูกต้อง
+
+2. **การประเมินขนาด ปริมาณ และความลึก (Portion & Depth Estimation):**
+   - ให้สังเกตขนาดภาชนะเทียบกับวัตถุรอบข้าง (เช่น ช้อน, ส้อม, มือ, แก้ว, จานมาตรฐาน 22-25 cm)
+   - ประเมิน "ความหนา/ความลึก/ปริมาณจริง" ของอาหารในจาน ไม่ใช่ดูแค่พื้นที่ความกว้าง 2D
+   - **สำคัญมาก**: ห้ามเหมาคำนวณเป็นจานมาตรฐาน (400-500 kcal) เสมอไป หากในภาพมีอาหารเพียงเล็กน้อย (เช่น มีข้าว 2-3 คำ, มีเศษอาหาร, หรือมีอาหารแค่ 1/4 จาน) ให้ประเมินน้ำหนักจริงเป็นกรัม (g) แล้วปรับลดแคลอรี่ลงมาตามจริงทันที (เช่น 50-150 kcal)
+
+3. **รูปแบบการตอบกลับ (Output Format):**
+   ต้องตอบกลับเป็น JSON ภาษาไทยเท่านั้น ตามโครงสร้างต่อไปนี้ (ห้ามมี Markdown ย้อนกลับหรือข้อความอื่นนอกเหนือจาก JSON):
 {
-  "foodName": "ชื่อเมนูภาษาไทยตรงตามรูปภาพ (เช่น ข้าวผัดกุ้ง / ชานมไข่มุก / ก๋วยเตี๋ยว)",
-  "portion": "ปริมาณประมาณการณ์ (เช่น 1 จาน / 1 ชาม / 1 แก้ว)",
-  "calories": 400,
-  "proteinGrams": 20,
-  "carbsGrams": 50,
-  "fatGrams": 12,
-  "fiberGrams": 2,
-  "healthSummary": "คำแนะนำโภชนาการที่เหมาะสมสำหรับเมนูนี้"
+  "foodName": "ชื่อเมนู หรือ เครื่องดื่มภาษาไทยที่แม่นยำ",
+  "category": "food" หรือ "beverage" หรือ "water",
+  "portion": "ปริมาณประเมินจากภาพจริง (เช่น ประมาณ 100g / 1/3 ของจาน / แก้ว 250ml)",
+  "calories": 150,
+  "proteinGrams": 12,
+  "carbsGrams": 15,
+  "fatGrams": 4,
+  "fiberGrams": 1,
+  "healthSummary": "อธิบายสั้นๆ ว่าทำไมถึงประเมินแคลอรี่เท่านี้ และคำแนะนำโภชนาการ"
 }`;
 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${savedApiKey}`;
@@ -736,7 +761,10 @@
                             ]
                         }
                     ],
-                    generationConfig: { responseMimeType: "application/json" }
+                    generationConfig: { 
+                        temperature: 0.2,
+                        responseMimeType: "application/json" 
+                    }
                 };
 
                 const response = await fetch(apiUrl, {
@@ -757,7 +785,7 @@
 
                 lastAnalyzedFood = parsedResult;
                 displayAnalysisResult(parsedResult, true);
-                showToast("วิเคราะห์ภาพถ่ายด้วย Gemini AI สำเร็จ!", "success");
+                showToast("วิเคราะห์ภาพถ่ายด้วย AI สำเร็จ!", "success");
 
             } catch (error) {
                 console.error('Error analyzing image:', error);
@@ -780,19 +808,19 @@
                 carbsGrams: 0,
                 fatGrams: 0,
                 fiberGrams: 0,
-                healthSummary: "⚠️ เพื่อให้ AI สแกนวิเคราะห์รูปภาพอาหารและน้ำหวานของคุณได้อย่างแม่นยำ กรุณากดปุ่ม 'ใส่ API Key (ฟรี)' ที่มุมขวาบน หรือกดลิงก์ในป๊อปอัพเพื่อรับ API Key ฟรีจาก Google สตรีมมิ่งได้เลยครับ!"
+                healthSummary: "⚠️ กรุณากดปุ่ม 'ใส่ API Key (ฟรี)' ที่มุมขวาบน หรือรับ Key ฟรีจาก Google เพื่อให้ AI วิเคราะห์ภาพอาหารตามปริมาณจริงครับ"
             };
         }
 
         function displayAnalysisResult(parsedResult, isLiveAi = true) {
-            document.getElementById('result-badge').innerText = isLiveAi ? "ผลวิเคราะห์ Gemini AI" : "ประเมินด้วย Smart AI";
+            document.getElementById('result-badge').innerText = isLiveAi ? "ผลวิเคราะห์ Gemini AI (ความแม่นยำสูง)" : "ประเมินด้วย Smart AI";
             document.getElementById('result-food-name').innerText = parsedResult.foodName || 'เมนูที่สแกน';
-            document.getElementById('result-portion').innerText = `ปริมาณประมาณ: ${parsedResult.portion || '1 จาน/แก้ว'}`;
-            document.getElementById('result-calories').innerText = parsedResult.calories || 0;
-            document.getElementById('result-protein').innerText = parsedResult.proteinGrams || 0;
-            document.getElementById('result-carbs').innerText = parsedResult.carbsGrams || 0;
-            document.getElementById('result-fat').innerText = parsedResult.fatGrams || 0;
-            document.getElementById('result-fiber').innerText = parsedResult.fiberGrams || 0;
+            document.getElementById('result-portion').innerText = `ปริมาณประเมินจริง: ${parsedResult.portion || '1 จาน/แก้ว'}`;
+            document.getElementById('result-calories').innerText = parsedResult.calories ?? 0;
+            document.getElementById('result-protein').innerText = parsedResult.proteinGrams ?? 0;
+            document.getElementById('result-carbs').innerText = parsedResult.carbsGrams ?? 0;
+            document.getElementById('result-fat').innerText = parsedResult.fatGrams ?? 0;
+            document.getElementById('result-fiber').innerText = parsedResult.fiberGrams ?? 0;
             document.getElementById('result-health-summary').innerText = parsedResult.healthSummary || 'ไม่มีคำแนะนำเพิ่มเติม';
             document.getElementById('scan-result').classList.remove('hidden');
         }
